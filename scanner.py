@@ -1,3 +1,4 @@
+#!usr/bin/env python
 import requests
 
 
@@ -16,4 +17,3 @@ with open("../../../usr/share/wordlists/dirb/common.txt", "r") as wordlists_file
         response = request(test_url)
         if response:
             print(f"[+] Discovered URL --> {test_url}")
-        
