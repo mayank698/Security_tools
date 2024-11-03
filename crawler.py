@@ -4,7 +4,7 @@ import re
 import urllib.parse as urlparse
 
 
-target_url = "http://192.168.164.130/mutillidae/"
+target_url = "https://www.luno.com/en/gb"
 target_list = []
 
 
